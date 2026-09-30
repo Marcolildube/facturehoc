@@ -22,26 +22,28 @@
         body {
             background-color: var(--bg-editor);
             margin: 0;
-            padding: 15px;
+            padding: 10px;
             color: #333;
         }
 
         .no-print-header {
             max-width: 1200px;
-            margin: 0 auto 15px auto;
+            margin: 0 auto 10px auto;
             background: #fff;
-            padding: 12px 20px;
+            padding: 12px 15px;
             border-radius: 8px;
             box-shadow: 0 2px 8px rgba(0,0,0,0.08);
             display: flex;
             justify-content: space-between;
             align-items: center;
+            flex-wrap: wrap;
+            gap: 10px;
         }
 
         .no-print-header h2 {
             margin: 0;
             color: var(--purple-main);
-            font-size: 16px;
+            font-size: 15px;
             font-weight: 700;
         }
 
@@ -49,12 +51,13 @@
             background-color: var(--purple-main);
             color: #fff;
             border: none;
-            padding: 10px 18px;
+            padding: 10px 16px;
             border-radius: 6px;
             cursor: pointer;
             font-weight: 700;
-            font-size: 13px;
+            font-size: 12px;
             transition: all 0.2s;
+            width: 100%;
         }
 
         .btn:hover { opacity: 0.9; }
@@ -63,39 +66,40 @@
             background-color: #5a4b6b;
             color: #fff;
             border: none;
-            padding: 6px 10px;
+            padding: 8px 10px;
             border-radius: 4px;
             cursor: pointer;
             font-weight: 600;
             font-size: 11px;
             margin-top: 5px;
+            width: 100%;
         }
 
         .btn-danger {
             background-color: #d9534f;
             color: #fff;
             border: none;
-            padding: 4px 8px;
+            padding: 6px 10px;
             border-radius: 4px;
             cursor: pointer;
-            font-size: 10px;
+            font-size: 12px;
         }
 
+        /* MISE EN PAGE ADAPTATIVE (MOBILE FIRST) */
         .main-layout {
             display: flex;
-            gap: 20px;
+            flex-direction: column;
+            gap: 15px;
             max-width: 1200px;
             margin: 0 auto;
         }
 
         .editor-panel {
-            flex: 1;
-            min-width: 350px;
+            width: 100%;
             background: #fff;
-            padding: 15px;
+            padding: 12px;
             border-radius: 8px;
             box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-            height: fit-content;
         }
 
         .panel-section {
@@ -115,28 +119,30 @@
 
         .form-row {
             display: flex;
+            flex-direction: column;
             gap: 8px;
             margin-bottom: 8px;
         }
 
         .form-group {
-            flex: 1;
+            width: 100%;
             display: flex;
             flex-direction: column;
             gap: 2px;
         }
 
         label {
-            font-size: 10px;
+            font-size: 11px;
             font-weight: 700;
             color: #666;
         }
 
         input, select {
-            padding: 6px 8px;
+            padding: 10px 8px;
             border: 1px solid #ccc;
             border-radius: 4px;
-            font-size: 11px;
+            font-size: 14px; /* Évite le zoom automatique sur iOS */
+            width: 100%;
         }
 
         .input-firstname { text-transform: capitalize; }
@@ -146,27 +152,28 @@
             display: flex;
             gap: 6px;
             align-items: center;
-            margin-bottom: 6px;
+            margin-bottom: 8px;
             background: #fdfdfd;
-            padding: 6px;
+            padding: 8px;
             border: 1px solid #e1e1e1;
             border-radius: 4px;
         }
 
         .preview-panel {
-            flex: 1.2;
+            width: 100%;
             display: flex;
             justify-content: center;
             background: #dcdfe4;
-            padding: 15px;
+            padding: 10px 5px;
             border-radius: 8px;
             overflow-x: auto;
         }
 
-        /* FORMAT EXACT A5 (148mm x 210mm) */
+        /* FORMAT EXACT A5 ADAPTÉ MOBILE */
         .invoice-box {
             width: 148mm;
             height: 210mm;
+            min-width: 148mm; /* Empêche l'écrasement sur mobile */
             background: #ffffff;
             padding: 8mm 8mm 6mm 8mm;
             box-shadow: 0 4px 15px rgba(0,0,0,0.12);
@@ -174,7 +181,6 @@
             display: flex;
             flex-direction: column;
             justify-content: space-between;
-            overflow: hidden;
         }
 
         .inv-header-wrapper {
@@ -231,7 +237,6 @@
             margin-bottom: 0;
         }
 
-        /* SECTION CENTRÉE VERTICALEMENT ENTRE HAUT ET BAS */
         .inv-middle-content {
             width: 100%;
             margin-top: auto;
@@ -328,7 +333,6 @@
             text-transform: uppercase;
         }
 
-        /* PIED DE PAGE */
         .inv-footer {
             display: flex;
             justify-content: space-between;
@@ -340,6 +344,7 @@
             font-size: 9px;
             font-weight: 800;
             color: #000;
+    
             line-height: 1.2;
             text-transform: uppercase;
         }
@@ -364,6 +369,17 @@
             height: auto;
             display: block;
             mix-blend-mode: multiply;
+        }
+
+        /* VERSION PC / ÉCRANS LARGES (Bureau) */
+        @media (min-width: 768px) {
+            body { padding: 15px; }
+            .main-layout { flex-direction: row; gap: 20px; }
+            .editor-panel { flex: 1; min-width: 350px; }
+            .preview-panel { flex: 1.2; padding: 15px; }
+            .form-row { flex-direction: row; }
+            .btn { width: auto; }
+            .no-print-header { flex-wrap: nowrap; }
         }
 
         /* CONFIGURATION IMPRESSION / PDF */
@@ -394,11 +410,13 @@
                 background: none;
                 padding: 0;
                 display: block;
+                overflow: visible;
             }
             .invoice-box {
                 box-shadow: none;
                 width: 148mm;
                 height: 210mm;
+                min-width: unset;
                 margin: 0 auto;
                 padding: 8mm 8mm 6mm 8mm;
                 page-break-after: avoid;
@@ -413,9 +431,9 @@
 <body>
 
 <div class="no-print-header">
-    <h2>Générateur de Factures A5 — HARI Online Club</h2>
+    <h2>Facturier HARI</h2>
     <div>
-        <button class="btn" id="downloadBtn" onclick="downloadPDF()">📥 Télécharger / Imprimer PDF (+1)</button>
+        <button class="btn" id="downloadBtn" onclick="downloadPDF()">📥 Télécharger PDF (+1)</button>
     </div>
 </div>
 
@@ -440,7 +458,7 @@
         <div class="panel-section">
             <h3>2. Client / Destinataire</h3>
             <div class="form-row">
-                <div class="form-group" style="flex:0.4;">
+                <div class="form-group">
                     <label>Civilité :</label>
                     <select id="cfgCivility" onchange="updateInvoice()">
                         <option value="Madame">Madame</option>
@@ -472,11 +490,11 @@
 
         <div class="panel-section">
             <h3>4. Informations Émetteur</h3>
-            <div class="form-group" style="margin-bottom:4px;">
+            <div class="form-group" style="margin-bottom:6px;">
                 <label>Nom complet :</label>
                 <input type="text" id="cfgOwner" value="HARINJO NANDRIANINA ANDRIAMAHENINA" oninput="updateInvoice()">
             </div>
-            <div class="form-group" style="margin-bottom:4px;">
+            <div class="form-group" style="margin-bottom:6px;">
                 <label>Adresse :</label>
                 <input type="text" id="cfgAddress" value="LOGEMENT 49 CITÉ FRAISE AMBOHITRARAHABA" oninput="updateInvoice()">
             </div>
@@ -507,7 +525,6 @@
     <div class="preview-panel">
         <div class="invoice-box" id="invoiceArea">
             
-            <!-- EN-TÊTE -->
             <div class="inv-header-wrapper">
                 <div class="inv-header">
                     <div class="inv-brand">
@@ -532,7 +549,6 @@
                 </div>
             </div>
 
-            <!-- SECTION CENTRÉE VERTICALEMENT ENTRE HAUT ET BAS -->
             <div class="inv-middle-content">
                 <table class="inv-table">
                     <thead>
@@ -541,9 +557,7 @@
                             <th class="col-amount">MONTANT</th>
                         </tr>
                     </thead>
-                    <tbody id="lblTableBody">
-                        <!-- Inséré dynamiquement -->
-                    </tbody>
+                    <tbody id="lblTableBody"></tbody>
                 </table>
 
                 <hr class="thick-divider">
@@ -569,12 +583,11 @@
                 <hr class="thick-divider">
             </div>
 
-            <!-- PIED DE PAGE -->
             <div class="inv-footer">
                 <div class="sign-block">
                     <div id="lblSignOwner">HARINJO NANDRIANINA<br>ANDRIAMAHENINA</div>
                     <div class="ceo-title">HARI ONLINE CLUB CEO</div>
-                    <img src="assets/signature.png" alt="Signature" class="signature-img">
+                    <img src="assets/signature.jpg" alt="Signature" class="signature-img">
                 </div>
 
                 <div>
@@ -627,11 +640,17 @@
         return dateStr;
     }
 
-    // Fonction pour mettre la première lettre de CHAQUE prénom en majuscule
     function capitalizeWords(str) {
         return str.toLowerCase().replace(/(?:^|\s)\S/g, function(a) {
             return a.toUpperCase();
         });
+    }
+
+    function initSavedInvoiceNumber() {
+        const savedNum = localStorage.getItem('last_invoice_num');
+        if (savedNum) {
+            document.getElementById('cfgNum').value = savedNum;
+        }
     }
 
     function addItem(desc = "", amount = "") {
@@ -658,14 +677,18 @@
     }
 
     function updateInvoice() {
-        document.getElementById('lblNum').innerText = document.getElementById('cfgNum').value;
+        const numVal = document.getElementById('cfgNum').value;
+        document.getElementById('lblNum').innerText = numVal;
+        
+        if (numVal.trim() !== "") {
+            localStorage.setItem('last_invoice_num', numVal);
+        }
         
         let rawDate = document.getElementById('cfgDate').value;
         document.getElementById('lblDate').innerText = formatDate(rawDate);
 
         document.getElementById('lblCivility').innerText = document.getElementById('cfgCivility').value;
         
-        // Application de la mise en majuscule de chaque prénom et du nom complet
         let firstnameRaw = document.getElementById('cfgFirstname').value;
         let firstname = capitalizeWords(firstnameRaw);
         let lastname = document.getElementById('cfgLastname').value.trim().toUpperCase();
@@ -717,11 +740,16 @@
 
         document.title = oldTitle;
 
-        let currentNum = parseInt(num) || 2026492;
-        document.getElementById('cfgNum').value = currentNum + 1;
+        let currentNum = parseInt(num);
+        if (!isNaN(currentNum)) {
+            let nextNum = currentNum + 1;
+            document.getElementById('cfgNum').value = nextNum;
+            localStorage.setItem('last_invoice_num', nextNum);
+        }
         updateInvoice();
     }
 
+    initSavedInvoiceNumber();
     updateInvoice();
 </script>
 
